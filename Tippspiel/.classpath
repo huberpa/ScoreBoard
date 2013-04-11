@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="lib" path="C:/Users/Patrick/Desktop/spring-android-1.0.1.RELEASE/libs/spring-android-auth-1.0.1.RELEASE.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/C:/Users/Patrick/Desktop/spring-android-1.0.1.RELEASE/docs/api/"/>
@@ -49,5 +48,6 @@
 			<attribute name="javadoc_location" value="file:/C:/Users/Patrick/Desktop/spring-android-1.0.1.RELEASE/docs/api/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Patrick/workspace/android/tippspiel1/Tippspiel/libs/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
