@@ -10,18 +10,76 @@ package com.example.scoreboard;
 public final class R {
     public static final class attr {
     }
+    public static final class dimen {
+        public static final int Errormsg_breite=0x7f040000;
+    }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int logo_scoreboard=0x7f020001;
+        public static final int banner_scoreboard=0x7f020000;
+        public static final int einstellungen=0x7f020001;
+        public static final int hingtergrund=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int logo_scoreboard=0x7f020004;
     }
     public static final class id {
-        public static final int button=0x7f070003;
-        public static final int imageView1=0x7f070005;
-        public static final int menu_settings=0x7f070006;
-        public static final int name=0x7f070000;
-        public static final int pwfeld=0x7f070004;
-        public static final int textView1=0x7f070001;
-        public static final int textView2=0x7f070002;
+        public static final int EditText01=0x7f08000d;
+        public static final int EditText02=0x7f08000f;
+        public static final int EditText03=0x7f080012;
+        public static final int EditText04=0x7f080014;
+        public static final int EditText05=0x7f080017;
+        public static final int EditText06=0x7f080019;
+        public static final int EditText07=0x7f08001c;
+        public static final int EditText08=0x7f08001e;
+        public static final int EditText09=0x7f080021;
+        public static final int EditText10=0x7f080023;
+        public static final int EditText11=0x7f080026;
+        public static final int EditText12=0x7f080028;
+        public static final int EditText13=0x7f08002b;
+        public static final int EditText14=0x7f08002d;
+        public static final int EditText15=0x7f080030;
+        public static final int EditText16=0x7f080032;
+        public static final int EditText17=0x7f080035;
+        public static final int EditText18=0x7f080037;
+        public static final int TextView01=0x7f08000c;
+        public static final int TextView02=0x7f08000e;
+        public static final int TextView03=0x7f080011;
+        public static final int TextView04=0x7f080013;
+        public static final int TextView05=0x7f080016;
+        public static final int TextView06=0x7f080018;
+        public static final int TextView07=0x7f08001b;
+        public static final int TextView08=0x7f08001d;
+        public static final int TextView09=0x7f080020;
+        public static final int TextView10=0x7f080022;
+        public static final int TextView11=0x7f080025;
+        public static final int TextView12=0x7f080027;
+        public static final int TextView13=0x7f08002a;
+        public static final int TextView14=0x7f08002c;
+        public static final int TextView15=0x7f08002f;
+        public static final int TextView16=0x7f080031;
+        public static final int TextView17=0x7f080034;
+        public static final int TextView18=0x7f080036;
+        public static final int button=0x7f080004;
+        public static final int errormessage=0x7f080005;
+        public static final int gruppe=0x7f080009;
+        public static final int imageView1=0x7f080006;
+        public static final int imageView2=0x7f080007;
+        public static final int menu_settings=0x7f08003a;
+        public static final int name=0x7f080000;
+        public static final int pwfeld=0x7f080003;
+        public static final int scrollView1=0x7f08000a;
+        public static final int spieltag=0x7f080008;
+        public static final int tableRow1=0x7f08000b;
+        public static final int tableRow10=0x7f080038;
+        public static final int tableRow2=0x7f080010;
+        public static final int tableRow3=0x7f080015;
+        public static final int tableRow4=0x7f08001a;
+        public static final int tableRow5=0x7f08001f;
+        public static final int tableRow6=0x7f080024;
+        public static final int tableRow7=0x7f080029;
+        public static final int tableRow8=0x7f08002e;
+        public static final int tableRow9=0x7f080033;
+        public static final int textView1=0x7f080001;
+        public static final int textView2=0x7f080002;
+        public static final int tippsabgeben=0x7f080039;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
@@ -29,12 +87,12 @@ public final class R {
         public static final int activity_start=0x7f030002;
     }
     public static final class menu {
-        public static final int activity_main=0x7f060000;
+        public static final int activity_main=0x7f070000;
     }
     public static final class string {
-        public static final int app_name=0x7f040000;
-        public static final int hello_world=0x7f040001;
-        public static final int menu_settings=0x7f040002;
+        public static final int app_name=0x7f050000;
+        public static final int hello_world=0x7f050001;
+        public static final int menu_settings=0x7f050002;
     }
     public static final class style {
         /** 
@@ -58,10 +116,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f050000;
+        public static final int AppBaseTheme=0x7f060000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f050001;
+        public static final int AppTheme=0x7f060001;
     }
 }
