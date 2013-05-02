@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.content.Context;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 public class Spinnerverwaltung {
 
