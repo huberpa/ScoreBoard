@@ -17,23 +17,53 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.scoreboard.StartActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:label="@string/app_name" 
             android:theme="@android:style/Theme.Light.NoTitleBar" 
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.example.scoreboard.MainActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:label="@string/app_name" 
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:screenOrientation="portrait">
         </activity>
-                <activity
+        <activity
+            android:name="com.example.scoreboard.TippenActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:label="@string/app_name" 
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
+         <activity
             android:name="com.example.scoreboard.LoginActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:label="@string/app_name" 
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
+         <activity
+            android:name="com.example.scoreboard.RegisterActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:label="@string/app_name" 
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.example.scoreboard.TippTabelleActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:label="@string/app_name" 
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.example.scoreboard.BundesligaActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:label="@string/app_name" 
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:screenOrientation="portrait">
