@@ -30,9 +30,6 @@ public class RegisterActivity extends Activity {
 		//WARTEZEICHEN
 		bar = (ProgressBar) findViewById(R.id.progressBar2);
     	bar.setVisibility(View.INVISIBLE);
-		
-		//Für Klassendiagramm
-		activity_register st = new activity_register();
 
 		//FELDER
 		final EditText Name = (EditText) findViewById(R.id.name);

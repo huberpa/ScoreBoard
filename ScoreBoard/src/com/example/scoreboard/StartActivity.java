@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -19,7 +20,6 @@ public class StartActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
-		activity_start st = new activity_start();
 		final LinearLayout clickLayout = (LinearLayout) findViewById(R.id.clicklayout);
 		final TextView errormsg = (TextView) findViewById(R.id.textView1);
 		errormsg.setTextColor(Color.RED);
@@ -69,5 +69,15 @@ public class StartActivity extends Activity {
 				// startActivityForResult(myIntent, 0);
 			}
 		});
+	}
+	
+	//Zurück-Button
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            System.out.println("Da wollte jemnd zurück");
+            return true;
+        }
+		return false;
 	}
 }

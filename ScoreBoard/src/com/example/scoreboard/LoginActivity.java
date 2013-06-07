@@ -47,10 +47,7 @@ public class LoginActivity extends Activity {
 		//WARTEZEICHEN
 		bar = (ProgressBar) findViewById(R.id.progressBar);
     	bar.setVisibility(View.INVISIBLE);
-		
-		//Für Klassendiagramm
-		activity_login st = new activity_login();
-		
+
 		//Nutzer hinzufügen
 //		user[0] = "Name";
 //		pw[0] = "Passwort";

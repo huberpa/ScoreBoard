@@ -66,9 +66,6 @@ public class TippTabelleActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ttabelle);
 
-		// UML
-		activity_tippen st = new activity_tippen();
-
 		// Aus Intent
 		getUebertrag();
 

@@ -56,9 +56,6 @@ public class BundesligaActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bundesliga);
 
-		// UML
-		activity_tippen st = new activity_tippen();
-
 		// Aus Intent
 		getUebertrag();
 

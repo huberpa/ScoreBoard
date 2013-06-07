@@ -76,9 +76,6 @@ public class TippenActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tippen);
 
-		// UML
-		activity_tippen st = new activity_tippen();
-
 		// Aus Intent
 		getUebertrag();
 
