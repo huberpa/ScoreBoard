@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal|left|top"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/neuegruppe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gruppenname" />
+
+    <EditText
+        android:id="@+id/newgroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/neuespasswort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Passwort" />
+
+    <EditText
+        android:id="@+id/newpw"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/acceptnewgroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Senden" />
+
+        <ProgressBar
+            android:id="@+id/progressBarGroup"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/errorresp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+    </LinearLayout>
+
+</LinearLayout>

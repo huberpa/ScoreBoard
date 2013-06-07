@@ -1,0 +1,165 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" 
+    android:background="@drawable/tipp_hg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:background="@drawable/top_hg"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp" >
+
+            <TextView
+                android:id="@+id/usr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="User" />
+
+            <TextView
+                android:id="@+id/gru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="Gruppe" />
+
+            <TextView
+                android:id="@+id/spi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"               
+                android:text="Spieltag" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right" >
+
+                <ImageView
+                    android:id="@+id/esc3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/esc" />
+
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/bt_button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/bundesliga_button" />
+
+            <ImageView
+                android:id="@+id/tt_button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/gruppe_button" />
+
+            <ImageView
+                android:id="@+id/tippen_button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/tippen_button" />
+
+        </LinearLayout>
+
+             <LinearLayout
+            android:id="@+id/header2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/TabelleSV2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp" >
+            
+        <LinearLayout
+            android:id="@+id/bund2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+        </LinearLayout>
+
+     </ScrollView>   
+        
+         </LinearLayout>
+
+       <SlidingDrawer
+         android:id="@+id/slidingDrawer1"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:content="@+id/content"
+         android:handle="@+id/handle"
+         android:topOffset="40dp" >
+
+         <ImageView
+             android:id="@+id/handle"
+             android:layout_width="wrap_content"
+             android:layout_height="28dp"
+             android:adjustViewBounds="false"
+             android:scaleType="fitEnd"
+             android:src="@drawable/choose" />
+
+         <LinearLayout
+             android:id="@+id/content"
+             android:layout_width="match_parent"
+             android:layout_height="332dp"
+             android:background="@color/ltgrey"
+             android:gravity="bottom" >
+
+             <ScrollView
+                 android:layout_width="158dp"
+                 android:layout_height="match_parent" >
+
+                 <LinearLayout
+                     android:id="@+id/Spieltage"
+                     android:layout_width="fill_parent"
+                     android:layout_height="match_parent"
+                     android:orientation="vertical" >
+
+                 </LinearLayout>
+             </ScrollView>
+
+             <ScrollView
+                 android:id="@+id/scrollView2"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent" >
+
+                 <LinearLayout
+                     android:id="@+id/Gruppenauswahl"
+                     android:layout_width="fill_parent"
+                     android:layout_height="match_parent"
+                     android:orientation="vertical" >
+                 </LinearLayout>
+             </ScrollView>
+         </LinearLayout>
+     </SlidingDrawer>
+    
+</RelativeLayout>
