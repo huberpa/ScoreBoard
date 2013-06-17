@@ -12,6 +12,7 @@
     android:focusableInTouchMode="true"
     android:layout_width="0dip" 
     android:layout_height="0dip"
+    android:orientation="vertical"
     android:id="@+id/dummyView"/>
     
     <TextView
@@ -30,8 +31,7 @@
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:ems="10"
-        android:hint="@string/usr"
-        android:text="mister" />
+        android:hint="@string/usr" />
     
     <TextView
         android:id="@+id/textView1"
@@ -51,8 +51,7 @@
         android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="@string/PW"
-        android:inputType="textPassword"
-        android:text="x" >
+        android:inputType="textPassword" >
 
     </EditText>
 
@@ -78,7 +77,8 @@
         android:id="@+id/errormessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp" />
+        android:layout_marginTop="14dp"
+        android:text="spass" />
 
     <LinearLayout
         android:layout_width="match_parent"

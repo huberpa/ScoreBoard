@@ -135,8 +135,7 @@
          <ImageView
              android:id="@+id/handle"
              android:layout_width="wrap_content"
-             android:layout_height="28dp"
-             android:adjustViewBounds="false"
+             android:layout_height="30dp"
              android:scaleType="fitEnd"
              android:src="@drawable/choose" />
 

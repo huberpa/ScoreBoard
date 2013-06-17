@@ -6,11 +6,12 @@
     android:gravity="center_horizontal|top"
     android:orientation="vertical" >
 
-      <LinearLayout
+    <LinearLayout
     android:focusable="true" 
     android:focusableInTouchMode="true"
     android:layout_width="0dip" 
     android:layout_height="0dip"
+    android:orientation="horizontal"
     android:id="@+id/dummyView"/>
     
     <TextView

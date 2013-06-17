@@ -4,30 +4,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Handler;
-import android.widget.TextView;
 
 public class ServerSchnittstelle extends Thread {
 
-	static Socket sock;
+	static Socket sock = null;
 	static Socket testsock;
 	static BufferedReader reader;
 	static int i = 0;
 
-	boolean verbindungAufbauen() {
+	public boolean verbindungAufbauen() {
+
 		try {
 			System.out.println("Connection Try...");
 			sock = new Socket();
 			sock.connect(new InetSocketAddress("193.196.7.45", 1991), 10000);
-			// sock.connect(new InetSocketAddress("192.168.1.29", 9999), 3000);
+			// sock.connect(new InetSocketAddress("192.168.1.29", 9999),
+			// 3000);
 			System.out.println("Connection Passt...");
 			return true;
 		} catch (Exception e) {
@@ -37,9 +32,9 @@ public class ServerSchnittstelle extends Thread {
 	}
 
 	void verbindungStop() {
-		
+
 		System.out.println(sock.isClosed());
-		
+
 		try {
 			PrintWriter writer = new PrintWriter(sock.getOutputStream(), true);
 			writer.println("STOP");
@@ -48,7 +43,8 @@ public class ServerSchnittstelle extends Thread {
 
 			sock.close();
 		} catch (Exception e) {
-			System.out.println("Ich bin sicher das die exception beim abbauen ist");
+			System.out
+					.println("Ich bin sicher das die exception beim abbauen ist");
 			e.printStackTrace();
 		}
 	}
@@ -186,7 +182,7 @@ public class ServerSchnittstelle extends Thread {
 
 			try {
 				Thread.sleep(10);
-//				System.out.println("sleepin'" + i);
+				// System.out.println("sleepin'" + i);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -222,7 +218,7 @@ public class ServerSchnittstelle extends Thread {
 
 			try {
 				Thread.sleep(10);
-//				System.out.println("sleepin'");
+				// System.out.println("sleepin'");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

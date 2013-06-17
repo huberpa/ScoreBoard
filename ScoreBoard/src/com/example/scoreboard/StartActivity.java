@@ -20,6 +20,9 @@ public class StartActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
+		// UML
+		activity_start start = new activity_start();
+
 		final LinearLayout clickLayout = (LinearLayout) findViewById(R.id.clicklayout);
 		final TextView errormsg = (TextView) findViewById(R.id.textView1);
 		errormsg.setTextColor(Color.RED);
@@ -35,6 +38,7 @@ public class StartActivity extends Activity {
 				bar.setVisibility(View.VISIBLE);
 
 				new Thread(new Runnable() {
+					@Override
 					public void run() {
 
 						ServerSchnittstelle ConnectionTest = new ServerSchnittstelle();
@@ -51,6 +55,7 @@ public class StartActivity extends Activity {
 							verbindungsteht = false;
 
 						bar.post(new Runnable() {
+							@Override
 							public void run() {
 								if (verbindungsteht == true) {
 									myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -70,14 +75,14 @@ public class StartActivity extends Activity {
 			}
 		});
 	}
-	
-	//Zurück-Button
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            System.out.println("Da wollte jemnd zurück");
-            return true;
-        }
+
+	// Zurück-Button
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			System.out.println("Da wollte jemnd zurück");
+			return true;
+		}
 		return false;
 	}
 }

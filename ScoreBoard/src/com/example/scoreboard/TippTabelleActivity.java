@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -66,6 +67,9 @@ public class TippTabelleActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ttabelle);
 
+		// UML
+		activity_tabelle tabelle = new activity_tabelle();
+
 		// Aus Intent
 		getUebertrag();
 
@@ -79,7 +83,12 @@ public class TippTabelleActivity extends Activity {
 		gru = (TextView) findViewById(R.id.gru);
 		spi = (TextView) findViewById(R.id.spi);
 		usr.setText(Name);
-		gru.setText(Groups.get(aktuelleGruppe));
+
+		if (!Groups.get(0).equals("0"))
+			gru.setText(Groups.get(aktuelleGruppe));
+		else
+			gru.setText("");
+
 		spi.setText("" + (aktuellerSpieltag + 1) + ". Spieltag");
 
 		// ButtonBilder
@@ -301,7 +310,7 @@ public class TippTabelleActivity extends Activity {
 		LinearLayout.LayoutParams background2 = new LinearLayout.LayoutParams(
 				width / 4, 60);
 		LinearLayout.LayoutParams background_header = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, 60);
+				LayoutParams.MATCH_PARENT, 60);
 		LinearLayout.LayoutParams AttrParam = new LinearLayout.LayoutParams(
 				width / 4, 40);
 		LinearLayout.LayoutParams FirstAttrParam = new LinearLayout.LayoutParams(
@@ -384,8 +393,14 @@ public class TippTabelleActivity extends Activity {
 		group = new RadioButton[100];
 		radio_gr = new RadioGroup(this);
 
+		LinearLayout.LayoutParams head = new LinearLayout.LayoutParams(
+				width / 2, LayoutParams.WRAP_CONTENT);
+		head.setMargins(20, 20, 0, 20);
+		head.gravity = Gravity.CENTER_VERTICAL;
+
 		final Button neueGruppe = new Button(this);
-		neueGruppe.setText("Gruppe beitreten");
+		neueGruppe.setText("Neue Gruppe");
+		neueGruppe.setLayoutParams(head);
 
 		GroupAddResponse = new TextView(this);
 
@@ -393,14 +408,29 @@ public class TippTabelleActivity extends Activity {
 		spielt_header.setText("Spieltage: ");
 		TextView group_header = new TextView(this);
 		group_header.setText("Gruppen: ");
+		group_header.setLayoutParams(head);
+		spielt_header.setLayoutParams(head);
+
+		LinearLayout.LayoutParams sepParams = new LinearLayout.LayoutParams(
+				width / 2, 2);
+
+		LinearLayout seperator1 = new LinearLayout(this);
+		seperator1.setBackgroundColor(Color.GRAY);
+		seperator1.setLayoutParams(sepParams);
+
+		LinearLayout seperator2 = new LinearLayout(this);
+		seperator2.setBackgroundColor(Color.GRAY);
+		seperator2.setLayoutParams(sepParams);
 
 		LinearLayout Spieltage = (LinearLayout) findViewById(R.id.Spieltage);
 		LinearLayout Gruppen = (LinearLayout) findViewById(R.id.Gruppenauswahl);
 
 		Spieltage.addView(spielt_header);
+		Spieltage.addView(seperator2);
 		Spieltage.addView(radio_st);
 
 		Gruppen.addView(group_header);
+		Gruppen.addView(seperator1);
 		Gruppen.addView(radio_gr);
 		Gruppen.addView(neueGruppe);
 		Gruppen.addView(GroupAddResponse);
@@ -436,6 +466,7 @@ public class TippTabelleActivity extends Activity {
 		});
 
 		radio_gr.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
 			public void onCheckedChanged(RadioGroup group2, int checkedId) {
 
 				group[aktuelleGruppe].setChecked(false);
@@ -447,29 +478,40 @@ public class TippTabelleActivity extends Activity {
 				group[aktuelleGruppe].setChecked(true);
 				gru.setText(Groups.get(aktuelleGruppe));
 
-				ServerSchnittstelle Connect = new ServerSchnittstelle();
-				if (Connect.verbindungAufbauen()) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						ServerSchnittstelle Connect = new ServerSchnittstelle();
+						if (Connect.verbindungAufbauen()) {
 
-					// Lade TTabelle
-					Connect.sendGruppenTabelleanfrage(Groups
-							.get(aktuelleGruppe));
-					TTabelle = Connect.receiveInhalt();
+							// Lade TTabelle
+							Connect.sendGruppenTabelleanfrage(Groups
+									.get(aktuelleGruppe));
+							TTabelle = Connect.receiveInhalt();
 
-					// Lade meine Tipps
-					Connect.sendGetTipps(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					meineTipps = Connect.receiveInhalt();
+							// Lade meine Tipps
+							Connect.sendGetTipps(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							meineTipps = Connect.receiveInhalt();
 
-					Connect.verbindungStop();
-				}
+							Connect.verbindungStop();
 
-				// UPDATE TABELLE
-				tabelle.removeAllViews();
-				createTable();
+							tabelle.post(new Runnable() {
+								@Override
+								public void run() {
+									// Update
+									tabelle.removeAllViews();
+									createTable();
+								}
+							});
+						}
+					}
+				}).start();
 			}
 		});
 
 		radio_st.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 
 				spielt[aktuellerSpieltag].setChecked(false);
@@ -481,25 +523,30 @@ public class TippTabelleActivity extends Activity {
 				spielt[aktuellerSpieltag].setChecked(true);
 				spi.setText("" + (aktuellerSpieltag + 1) + ". Spieltag");
 
-				ServerSchnittstelle Connect = new ServerSchnittstelle();
-				if (Connect.verbindungAufbauen()) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						ServerSchnittstelle Connect = new ServerSchnittstelle();
+						if (Connect.verbindungAufbauen()) {
 
-					// Lade aktuelle Begegnungen
-					Connect.sendASTanfrage(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					Begegnungen = Connect.receiveInhalt();
+							// Lade aktuelle Begegnungen
+							Connect.sendASTanfrage(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							Begegnungen = Connect.receiveInhalt();
 
-					// Lade meine Tipps
-					Connect.sendGetTipps(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					meineTipps = Connect.receiveInhalt();
+							// Lade meine Tipps
+							Connect.sendGetTipps(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							meineTipps = Connect.receiveInhalt();
 
-					// Lade richtige Ergebnisse
-					Connect.sendASEanfrage(aktuellerSpieltag);
-					realErg = Connect.receiveInhalt();
+							// Lade richtige Ergebnisse
+							Connect.sendASEanfrage(aktuellerSpieltag);
+							realErg = Connect.receiveInhalt();
 
-					Connect.verbindungStop();
-				}
+							Connect.verbindungStop();
+						}
+					}
+				}).start();
 			}
 		});
 	}
@@ -529,22 +576,24 @@ public class TippTabelleActivity extends Activity {
 				prog.setVisibility(View.VISIBLE);
 
 				new Thread(new Runnable() {
+					@Override
 					public void run() {
 						ServerSchnittstelle Connect = new ServerSchnittstelle();
 						if (Connect.verbindungAufbauen()) {
-							Connect.sendGruppenAnfrageData(Name,
-									newgroupname, pw);
+							Connect.sendGruppenAnfrageData(Name, newgroupname,
+									pw);
 							int result = Connect.receiveData();
 
 							if (result == 1) {
 								Connect.sendGruppenanfrage(Name);
 								Groups = Connect.receiveInhalt();
 
-								Connect.sendGruppenTabelleanfrage(Groups.get(aktuelleGruppe));
+								Connect.sendGruppenTabelleanfrage(Groups
+										.get(aktuelleGruppe));
 								TTabelle = Connect.receiveInhalt();
 
 								fehler = 1;
-								
+
 							} else {
 								fehler = 0;
 							}
@@ -554,6 +603,7 @@ public class TippTabelleActivity extends Activity {
 							fehler = -1;
 
 						radio_gr.post(new Runnable() {
+							@Override
 							public void run() {
 								prog.setVisibility(View.INVISIBLE);
 								dialog.dismiss();

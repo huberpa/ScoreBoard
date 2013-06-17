@@ -2,15 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    tools:context=".MainActivity"
-    android:background="@drawable/tipp_hg" >
+    android:layout_gravity="center|bottom"
+    android:background="@drawable/tipp_hg"
+    tools:context=".MainActivity" >
 
     <LinearLayout
     android:focusable="true" 
     android:focusableInTouchMode="true"
     android:layout_width="0dip" 
     android:layout_height="0dip"
+    android:orientation="horizontal"
     android:id="@+id/dummyView"/>
     
     <LinearLayout
@@ -156,8 +157,7 @@
          <ImageView
              android:id="@+id/handle"
              android:layout_width="wrap_content"
-             android:layout_height="28dp"
-             android:adjustViewBounds="false"
+             android:layout_height="30dp"
              android:scaleType="fitEnd"
              android:src="@drawable/choose" />
 

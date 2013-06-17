@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -22,12 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 
 public class BundesligaActivity extends Activity {
 
-	// Allgemein
+	// Allgemeine Variablen
 	TextView usr;
 	TextView gru;
 	TextView spi;
@@ -37,48 +38,54 @@ public class BundesligaActivity extends Activity {
 	Context haupt = this;
 	int fehler = 1;
 	TextView GroupAddResponse;
-	// änderbar
+
+	// Durch Intent erhaltene Daten
 	int aktuellerSpieltag;
 	int aktuelleGruppe;
-	// abhängig
 	ArrayList<String> Begegnungen = new ArrayList<String>();
 	ArrayList<String> meineTipps = new ArrayList<String>();
 	ArrayList<String> realErg = new ArrayList<String>();
 	boolean tippenErlaubt = false;
 	ArrayList<String> TTabelle = new ArrayList<String>();
-	// unabhängig
 	ArrayList<String> BTabelle = new ArrayList<String>();
 	ArrayList<String> Groups = new ArrayList<String>();
 	String Name;
 
+	// Mit erstellen des Objekts ausgeführte Funktion
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bundesliga);
 
-		// Aus Intent
+		// Daten aus Intent speichern
 		getUebertrag();
 
-		// DisplayMetriken
+		// DisplayMetriken auslesen
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		width = displaymetrics.widthPixels;
 
-		// View Referenzieren
+		// Views Referenzieren
 		usr = (TextView) findViewById(R.id.usr);
 		gru = (TextView) findViewById(R.id.gru);
 		spi = (TextView) findViewById(R.id.spi);
 		usr.setText(Name);
-		gru.setText(Groups.get(aktuelleGruppe));
+
+		// Statuszeile formatieren
+		if (!Groups.get(0).equals("0"))
+			gru.setText(Groups.get(aktuelleGruppe));
+		else
+			gru.setText("");
+
 		spi.setText("" + (aktuellerSpieltag + 1) + ". Spieltag");
 
-		// ButtonBilder
+		// Navigationsleiste Referenzieren
 		final ImageView tippen = (ImageView) findViewById(R.id.tippen_button2);
 		final ImageView bt = (ImageView) findViewById(R.id.bt_button2);
 		final ImageView tt = (ImageView) findViewById(R.id.tt_button2);
 		final ImageView esc = (ImageView) findViewById(R.id.esc2);
 
-		// Params
+		// Navigationsleiste Parameter setzen
 		LinearLayout.LayoutParams aussen = new LinearLayout.LayoutParams(
 				width / 6, width / 6);
 		LinearLayout.LayoutParams mitte = new LinearLayout.LayoutParams(
@@ -92,10 +99,10 @@ public class BundesligaActivity extends Activity {
 		bt.setLayoutParams(mitte);
 		tt.setLayoutParams(aussen);
 
-		// Erzeuge Hauptbild
+		// Erzeugt Inhalt der Activity
 		createTable();
 
-		// Erzeuge Slider
+		// Erzeuge Menüslider
 		createSlider();
 
 		tippen.setOnClickListener(new OnClickListener() {
@@ -261,8 +268,6 @@ public class BundesligaActivity extends Activity {
 		Name = zielkorb.getString("Name");
 		aktuellerSpieltag = zielkorb.getInt("Spieltag");
 		aktuelleGruppe = zielkorb.getInt("Gruppe");
-		System.out.println("Check1");
-
 		Begegnungen = zielkorb.getStringArrayList("Begegnungen");
 		meineTipps = zielkorb.getStringArrayList("meineTipps");
 		realErg = zielkorb.getStringArrayList("realErg");
@@ -288,37 +293,20 @@ public class BundesligaActivity extends Activity {
 		TextView[] Tordiff = new TextView[19];
 		TextView[] Pkt = new TextView[19];
 
-		// Von Server
-		// int i = 0;
-		// while(i*3+2 <= BTabelle.size()){
-		// Mannschaften[i] = new TextView(this);
-		// Punkte[i] = new TextView(this);
-		// Tordiff[i] = new TextView(this);
-		//
-		// Mannschaften[i].setText(BTabelle.get(i*3));
-		// Punkte[i].setText(BTabelle.get(i*3+1));
-		// Tordiff[i].setText(BTabelle.get(i*3+2));
-		//
-		// MannschaftZeile.addView(Mannschaften[i]);
-		// PunkteZeile.addView(Punkte[i]);
-		// TordiffZeile.addView(Tordiff[i]);
-		// i++;
-		// }
-
 		LinearLayout.LayoutParams background = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT, 60);
+				LayoutParams.WRAP_CONTENT, 60);
 		LinearLayout.LayoutParams background_header = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, 60);
+				LayoutParams.MATCH_PARENT, 60);
 		LinearLayout.LayoutParams background_footer = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, 100);
+				LayoutParams.MATCH_PARENT, 100);
 		LinearLayout.LayoutParams LogoParam = new LinearLayout.LayoutParams(40,
 				40);
 		LinearLayout.LayoutParams AttrParam = new LinearLayout.LayoutParams(
 				width / 7, 40);
 		LinearLayout.LayoutParams ErklaerParam1 = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, 30);
+				LayoutParams.MATCH_PARENT, 30);
 		LinearLayout.LayoutParams ErklaerParam2 = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, 30);
+				LayoutParams.MATCH_PARENT, 30);
 		LinearLayout.LayoutParams AttrParamMann = new LinearLayout.LayoutParams(
 				width / 7 + 50, 40);
 		LinearLayout.LayoutParams FirstAttrParam = new LinearLayout.LayoutParams(
@@ -537,8 +525,14 @@ public class BundesligaActivity extends Activity {
 		group = new RadioButton[100];
 		radio_gr = new RadioGroup(this);
 
+		LinearLayout.LayoutParams head = new LinearLayout.LayoutParams(
+				width / 2, LayoutParams.WRAP_CONTENT);
+		head.setMargins(20, 20, 0, 20);
+		head.gravity = Gravity.CENTER_VERTICAL;
+
 		final Button neueGruppe = new Button(this);
-		neueGruppe.setText("Gruppe beitreten");
+		neueGruppe.setText("Neue Gruppe");
+		neueGruppe.setLayoutParams(head);
 
 		GroupAddResponse = new TextView(this);
 
@@ -546,14 +540,29 @@ public class BundesligaActivity extends Activity {
 		spielt_header.setText("Spieltage: ");
 		TextView group_header = new TextView(this);
 		group_header.setText("Gruppen: ");
+		group_header.setLayoutParams(head);
+		spielt_header.setLayoutParams(head);
+
+		LinearLayout.LayoutParams sepParams = new LinearLayout.LayoutParams(
+				width / 2, 2);
+
+		LinearLayout seperator1 = new LinearLayout(this);
+		seperator1.setBackgroundColor(Color.GRAY);
+		seperator1.setLayoutParams(sepParams);
+
+		LinearLayout seperator2 = new LinearLayout(this);
+		seperator2.setBackgroundColor(Color.GRAY);
+		seperator2.setLayoutParams(sepParams);
 
 		LinearLayout Spieltage = (LinearLayout) findViewById(R.id.Spieltage);
 		LinearLayout Gruppen = (LinearLayout) findViewById(R.id.Gruppenauswahl);
 
 		Spieltage.addView(spielt_header);
+		Spieltage.addView(seperator2);
 		Spieltage.addView(radio_st);
 
 		Gruppen.addView(group_header);
+		Gruppen.addView(seperator1);
 		Gruppen.addView(radio_gr);
 		Gruppen.addView(neueGruppe);
 		Gruppen.addView(GroupAddResponse);
@@ -589,6 +598,7 @@ public class BundesligaActivity extends Activity {
 		});
 
 		radio_gr.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
 			public void onCheckedChanged(RadioGroup group2, int checkedId) {
 
 				group[aktuelleGruppe].setChecked(false);
@@ -600,25 +610,32 @@ public class BundesligaActivity extends Activity {
 				group[aktuelleGruppe].setChecked(true);
 				gru.setText(Groups.get(aktuelleGruppe));
 
-				ServerSchnittstelle Connect = new ServerSchnittstelle();
-				if (Connect.verbindungAufbauen()) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						ServerSchnittstelle Connect = new ServerSchnittstelle();
+						if (Connect.verbindungAufbauen()) {
 
-					// Lade TTabelle
-					Connect.sendGruppenTabelleanfrage(Groups
-							.get(aktuelleGruppe));
-					TTabelle = Connect.receiveInhalt();
+							// Lade TTabelle
+							Connect.sendGruppenTabelleanfrage(Groups
+									.get(aktuelleGruppe));
+							TTabelle = Connect.receiveInhalt();
 
-					// Lade meine Tipps
-					Connect.sendGetTipps(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					meineTipps = Connect.receiveInhalt();
+							// Lade meine Tipps
+							Connect.sendGetTipps(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							meineTipps = Connect.receiveInhalt();
 
-					Connect.verbindungStop();
-				}
+							Connect.verbindungStop();
+
+						}
+					}
+				}).start();
 			}
 		});
 
 		radio_st.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 
 				spielt[aktuellerSpieltag].setChecked(false);
@@ -630,25 +647,31 @@ public class BundesligaActivity extends Activity {
 				spielt[aktuellerSpieltag].setChecked(true);
 				spi.setText("" + (aktuellerSpieltag + 1) + ". Spieltag");
 
-				ServerSchnittstelle Connect = new ServerSchnittstelle();
-				if (Connect.verbindungAufbauen()) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						ServerSchnittstelle Connect = new ServerSchnittstelle();
+						if (Connect.verbindungAufbauen()) {
 
-					// Lade aktuelle Begegnungen
-					Connect.sendASTanfrage(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					Begegnungen = Connect.receiveInhalt();
+							// Lade aktuelle Begegnungen
+							Connect.sendASTanfrage(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							Begegnungen = Connect.receiveInhalt();
 
-					// Lade meine Tipps
-					Connect.sendGetTipps(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					meineTipps = Connect.receiveInhalt();
+							// Lade meine Tipps
+							Connect.sendGetTipps(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							meineTipps = Connect.receiveInhalt();
 
-					// Lade richtige Ergebnisse
-					Connect.sendASEanfrage(aktuellerSpieltag);
-					realErg = Connect.receiveInhalt();
+							// Lade richtige Ergebnisse
+							Connect.sendASEanfrage(aktuellerSpieltag);
+							realErg = Connect.receiveInhalt();
 
-					Connect.verbindungStop();
-				}
+							Connect.verbindungStop();
+
+						}
+					}
+				}).start();
 			}
 		});
 	}
@@ -678,22 +701,24 @@ public class BundesligaActivity extends Activity {
 				prog.setVisibility(View.VISIBLE);
 
 				new Thread(new Runnable() {
+					@Override
 					public void run() {
 						ServerSchnittstelle Connect = new ServerSchnittstelle();
 						if (Connect.verbindungAufbauen()) {
-							Connect.sendGruppenAnfrageData(Name,
-									newgroupname, pw);
+							Connect.sendGruppenAnfrageData(Name, newgroupname,
+									pw);
 							int result = Connect.receiveData();
 
 							if (result == 1) {
 								Connect.sendGruppenanfrage(Name);
 								Groups = Connect.receiveInhalt();
 
-								Connect.sendGruppenTabelleanfrage(Groups.get(aktuelleGruppe));
+								Connect.sendGruppenTabelleanfrage(Groups
+										.get(aktuelleGruppe));
 								TTabelle = Connect.receiveInhalt();
 
 								fehler = 1;
-								
+
 							} else {
 								fehler = 0;
 							}
@@ -703,6 +728,7 @@ public class BundesligaActivity extends Activity {
 							fehler = -1;
 
 						radio_gr.post(new Runnable() {
+							@Override
 							public void run() {
 								prog.setVisibility(View.INVISIBLE);
 								dialog.dismiss();

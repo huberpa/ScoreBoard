@@ -7,11 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -19,7 +15,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
@@ -36,11 +31,15 @@ import android.widget.TextView;
 
 public class TippenActivity extends Activity {
 
+	// UML
+	activity_tippen tippen = new activity_tippen();
+
 	// Allgemein
 	TextView usr;
 	TextView gru;
 	TextView spi;
 	int width;
+	Button submit;
 	RadioGroup radio_gr;
 	RadioButton[] group;
 	Context haupt = this;
@@ -89,15 +88,26 @@ public class TippenActivity extends Activity {
 		gru = (TextView) findViewById(R.id.gru);
 		spi = (TextView) findViewById(R.id.spi);
 		usr.setText(Name);
-		gru.setText(Groups.get(aktuelleGruppe));
+
+		if (!Groups.get(0).equals("0"))
+			gru.setText(Groups.get(aktuelleGruppe));
+		else
+			gru.setText("");
+
 		spi.setText("" + (aktuellerSpieltag + 1) + ". Spieltag");
+
+		// //Handle
+		// ImageView handle = (ImageView) findViewById(R.id.handle);
+		// LayoutParams handleparams = new
+		// LayoutParams(width,LayoutParams.WRAP_CONTENT);
+		// handle.setLayoutParams(handleparams);
 
 		// ButtonBilder
 		final ImageView tippen = (ImageView) findViewById(R.id.tippen_button);
 		final ImageView bt = (ImageView) findViewById(R.id.bt_button);
 		final ImageView tt = (ImageView) findViewById(R.id.tt_button);
 		final ImageView esc = (ImageView) findViewById(R.id.esc);
-		Button submit = (Button) findViewById(R.id.button1);
+		submit = (Button) findViewById(R.id.button1);
 		submitresponse = (TextView) findViewById(R.id.savetipps);
 
 		// Params
@@ -323,8 +333,10 @@ public class TippenActivity extends Activity {
 
 					ServerSchnittstelle Connect = new ServerSchnittstelle();
 					if (Connect.verbindungAufbauen()) {
-						Connect.sendMeineTipps(aktuellerSpieltag, Groups.get(aktuelleGruppe), Name, tipps);
+						Connect.sendMeineTipps(aktuellerSpieltag,
+								Groups.get(aktuelleGruppe), Name, tipps);
 						result = Connect.receiveData();
+						Connect.verbindungStop();
 					}
 					if (result == 1) {
 						submitresponse.setText("Tipps wurden gespeichert");
@@ -334,7 +346,8 @@ public class TippenActivity extends Activity {
 						submitresponse.setTextColor(Color.RED);
 					}
 				} else {
-					submitresponse.setText("Tipps sind unvollständig...Bitte Tipps überprüfen");
+					submitresponse
+							.setText("Tipps sind unvollständig...Bitte Tipps überprüfen");
 					submitresponse.setTextColor(Color.RED);
 				}
 
@@ -364,12 +377,12 @@ public class TippenActivity extends Activity {
 
 		submitresponse.setText("");
 
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100,
-				android.widget.LinearLayout.LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				width * 1 / 2, LayoutParams.WRAP_CONTENT);
 		LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(60,
 				60);
 		LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(
-				width * 2 / 3, 60);
+				width * 3 / 4, 60);
 		LinearLayout.LayoutParams params4 = new LinearLayout.LayoutParams(40,
 				40);
 		params.gravity = Gravity.CENTER_VERTICAL;
@@ -418,9 +431,13 @@ public class TippenActivity extends Activity {
 				realscore[i].setText("( - : - )");
 
 			// Edittexts editable?
-			if (Begegnungen.get(0).equals("0")) {
+			if (Begegnungen.get(0).equals("0") || Groups.get(0).equals("0")) {
 				erg1[i].setEnabled(false);
 				erg2[i].setEnabled(false);
+				submit.setEnabled(false);
+			} else {
+				submit.setEnabled(true);
+
 			}
 
 			// Logos einfügen
@@ -436,6 +453,7 @@ public class TippenActivity extends Activity {
 			teamarea[i].addView(team[i]);
 			teamarea[i].addView(iv2);
 			teamarea[i].addView(realscore[i]);
+
 			textspace2.addView(tipparea[i]);
 			tipparea[i].addView(erg1[i]);
 			tipparea[i].addView(erg2[i]);
@@ -599,8 +617,14 @@ public class TippenActivity extends Activity {
 		group = new RadioButton[100];
 		radio_gr = new RadioGroup(this);
 
+		LinearLayout.LayoutParams head = new LinearLayout.LayoutParams(
+				width / 2, LayoutParams.WRAP_CONTENT);
+		head.setMargins(20, 20, 0, 20);
+		head.gravity = Gravity.CENTER_VERTICAL;
+
 		final Button neueGruppe = new Button(this);
-		neueGruppe.setText("Gruppe beitreten");
+		neueGruppe.setText("Neue Gruppe");
+		neueGruppe.setLayoutParams(head);
 
 		GroupAddResponse = new TextView(this);
 
@@ -608,14 +632,29 @@ public class TippenActivity extends Activity {
 		spielt_header.setText("Spieltage: ");
 		TextView group_header = new TextView(this);
 		group_header.setText("Gruppen: ");
+		group_header.setLayoutParams(head);
+		spielt_header.setLayoutParams(head);
+
+		LinearLayout.LayoutParams sepParams = new LinearLayout.LayoutParams(
+				width / 2, 2);
+
+		LinearLayout seperator1 = new LinearLayout(this);
+		seperator1.setBackgroundColor(Color.GRAY);
+		seperator1.setLayoutParams(sepParams);
+
+		LinearLayout seperator2 = new LinearLayout(this);
+		seperator2.setBackgroundColor(Color.GRAY);
+		seperator2.setLayoutParams(sepParams);
 
 		LinearLayout Spieltage = (LinearLayout) findViewById(R.id.Spieltage);
 		LinearLayout Gruppen = (LinearLayout) findViewById(R.id.Gruppenauswahl);
 
 		Spieltage.addView(spielt_header);
+		Spieltage.addView(seperator2);
 		Spieltage.addView(radio_st);
 
 		Gruppen.addView(group_header);
+		Gruppen.addView(seperator1);
 		Gruppen.addView(radio_gr);
 		Gruppen.addView(neueGruppe);
 		Gruppen.addView(GroupAddResponse);
@@ -651,6 +690,7 @@ public class TippenActivity extends Activity {
 		});
 
 		radio_gr.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
 			public void onCheckedChanged(RadioGroup group2, int checkedId) {
 
 				group[aktuelleGruppe].setChecked(false);
@@ -662,67 +702,87 @@ public class TippenActivity extends Activity {
 				group[aktuelleGruppe].setChecked(true);
 				gru.setText(Groups.get(aktuelleGruppe));
 
-				ServerSchnittstelle Connect = new ServerSchnittstelle();
-				if (Connect.verbindungAufbauen()) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						ServerSchnittstelle Connect = new ServerSchnittstelle();
+						if (Connect.verbindungAufbauen()) {
 
-					// Lade TTabelle
-					Connect.sendGruppenTabelleanfrage(Groups
-							.get(aktuelleGruppe));
-					TTabelle = Connect.receiveInhalt();
+							// Lade TTabelle
+							Connect.sendGruppenTabelleanfrage(Groups
+									.get(aktuelleGruppe));
+							TTabelle = Connect.receiveInhalt();
 
-					// Lade meine Tipps
-					Connect.sendGetTipps(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					meineTipps = Connect.receiveInhalt();
+							// Lade meine Tipps
+							Connect.sendGetTipps(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							meineTipps = Connect.receiveInhalt();
 
-					Connect.verbindungStop();
-				}
+							Connect.verbindungStop();
 
-				// Update
-				textspace1.removeAllViews();
-				textspace2.removeAllViews();
-				createTable();
+							textspace1.post(new Runnable() {
+								@Override
+								public void run() {
+									// Update
+									textspace1.removeAllViews();
+									textspace2.removeAllViews();
+									createTable();
 
+								}
+							});
+						}
+					}
+				}).start();
 			}
 		});
 
 		radio_st.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 
 				spielt[aktuellerSpieltag].setChecked(false);
 				RadioButton radioButton = (RadioButton) group
 						.findViewById(checkedId);
 				int indexOfButton = group.indexOfChild(radioButton);
-				System.out.println("Neuer Spieltag: " + indexOfButton);
 				aktuellerSpieltag = indexOfButton;
 				spielt[aktuellerSpieltag].setChecked(true);
 				spi.setText("" + (aktuellerSpieltag + 1) + ". Spieltag");
 
-				ServerSchnittstelle Connect = new ServerSchnittstelle();
-				if (Connect.verbindungAufbauen()) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						ServerSchnittstelle Connect = new ServerSchnittstelle();
+						if (Connect.verbindungAufbauen()) {
 
-					// Lade aktuelle Begegnungen
-					Connect.sendASTanfrage(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					Begegnungen = Connect.receiveInhalt();
+							// Lade aktuelle Begegnungen
+							Connect.sendASTanfrage(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							Begegnungen = Connect.receiveInhalt();
 
-					// Lade meine Tipps
-					Connect.sendGetTipps(aktuellerSpieltag,
-							Groups.get(aktuelleGruppe), Name);
-					meineTipps = Connect.receiveInhalt();
+							// Lade meine Tipps
+							Connect.sendGetTipps(aktuellerSpieltag,
+									Groups.get(aktuelleGruppe), Name);
+							meineTipps = Connect.receiveInhalt();
 
-					// Lade richtige Ergebnisse
-					Connect.sendASEanfrage(aktuellerSpieltag);
-					realErg = Connect.receiveInhalt();
+							// Lade richtige Ergebnisse
+							Connect.sendASEanfrage(aktuellerSpieltag);
+							realErg = Connect.receiveInhalt();
 
-					Connect.verbindungStop();
-				}
+							Connect.verbindungStop();
 
-				// Update
-				textspace1.removeAllViews();
-				textspace2.removeAllViews();
-				createTable();
+							textspace1.post(new Runnable() {
+								@Override
+								public void run() {
+									// Update
+									textspace1.removeAllViews();
+									textspace2.removeAllViews();
+									createTable();
 
+								}
+							});
+						}
+					}
+				}).start();
 			}
 		});
 	}
@@ -751,10 +811,15 @@ public class TippenActivity extends Activity {
 				final String pw = pwGruppe.getText().toString();
 				prog.setVisibility(View.VISIBLE);
 
+				TextView er = (TextView) dialog.findViewById(R.id.errorresp);
+
+				er.setText("");
+
 				if (newgroupname.indexOf(";") == -1 && pw.indexOf(";") == -1) {
 					if (newgroupname.length() < 21 && pw.length() < 21) {
 
 						new Thread(new Runnable() {
+							@Override
 							public void run() {
 								ServerSchnittstelle Connect = new ServerSchnittstelle();
 								if (Connect.verbindungAufbauen()) {
@@ -766,11 +831,12 @@ public class TippenActivity extends Activity {
 										Connect.sendGruppenanfrage(Name);
 										Groups = Connect.receiveInhalt();
 
-										Connect.sendGruppenTabelleanfrage(Groups.get(aktuelleGruppe));
+										Connect.sendGruppenTabelleanfrage(Groups
+												.get(aktuelleGruppe));
 										TTabelle = Connect.receiveInhalt();
 
 										fehler = 1;
-										
+
 									} else {
 										fehler = 0;
 									}
@@ -780,6 +846,7 @@ public class TippenActivity extends Activity {
 									fehler = -1;
 
 								submitresponse.post(new Runnable() {
+									@Override
 									public void run() {
 										prog.setVisibility(View.INVISIBLE);
 										dialog.dismiss();
@@ -832,14 +899,14 @@ public class TippenActivity extends Activity {
 						}).start();
 
 					} else {
-						TextView er = (TextView) findViewById(R.id.errorresp);
 						er.setText("Gruppenname ist zu lang");
 						er.setTextColor(Color.RED);
+						prog.setVisibility(View.INVISIBLE);
 					}
 				} else {
-					TextView er = (TextView) findViewById(R.id.errorresp);
 					er.setText("Gruppenname enthält unzulässiges Zeichen");
 					er.setTextColor(Color.RED);
+					prog.setVisibility(View.INVISIBLE);
 				}
 			}
 
